@@ -1,4 +1,5 @@
 # Merchant Agent Gateway
+**🚀 Live Demo:** [merchant-agent-gateway-pax.streamlit.app](https://merchant-agent-gateway-pax.streamlit.app)
 
 A hardened, tested reference for what a **merchant-side integration**
 against agentic-commerce infrastructure (Google's AP2, OpenAI/Stripe's
