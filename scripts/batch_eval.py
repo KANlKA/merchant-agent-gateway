@@ -1,18 +1,4 @@
-"""
-Batch evaluation harness.
 
-Generates synthetic mandates spanning every accept/reject scenario the
-gateway pipeline can produce, submits each through the REAL
-process_mandate() pipeline (no shortcuts), and scores actual vs.
-expected outcome. Reports a full confusion matrix — false accepts
-(the dangerous kind: something that SHOULD have been rejected wasn't)
-reported separately from false rejects (safe but annoying: something
-fine got blocked).
-
-Run:
-    python scripts/batch_eval.py
-    python scripts/batch_eval.py --db data/eval.db   # isolated eval DB
-"""
 from __future__ import annotations
 
 import argparse
@@ -276,6 +262,18 @@ def _forge(victim_agent, forger_agent, item, mandate_id=None) -> Mandate:
 
 def run_evaluation(db_path: Path) -> dict:
     use_isolated_test_db(db_path)
+
+    # Force mock mode for the ENTIRE eval run, regardless of what's in
+    # .env. This harness tests verify_mandate()/evaluate_policy() logic
+    # against ~25 "should accept" cases in a tight loop -- it has no
+    # business hitting Razorpay's real API at all, and doing so is what
+    # caused a real failure: Razorpay's test-mode rate limit kicked in
+    # mid-run and turned correct accepts into false rejects (accuracy
+    # dropped to 92.8%, non-deterministically, depending on network
+    # conditions). Mock mode is free, instant, and deterministic --
+    # exactly what a scoring harness needs.
+    import app.razorpay_client as razorpay_client_module
+    razorpay_client_module.LIVE_MODE = False
 
     agents = {
         "good": security.register_agent("eval-good-agent"),

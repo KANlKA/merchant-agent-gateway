@@ -1,8 +1,4 @@
-"""
-Standalone Razorpay credential check -- no app code involved at all.
-If this fails with "Authentication failed" too, the problem is
-definitely the .env values themselves, not anything in the gateway.
-"""
+
 import os
 from dotenv import load_dotenv
 load_dotenv()

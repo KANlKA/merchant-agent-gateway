@@ -1,12 +1,4 @@
-"""
-End-to-end demo. Zero external dependencies — runs anywhere Python
-runs, no server, no pip install needed. Exercises the exact same
-app.gateway pipeline that the FastAPI server (app/main.py) calls over
-HTTP; this script just calls it directly, in-process.
 
-Run:
-    python scripts/run_demo.py
-"""
 from __future__ import annotations
 
 import sys

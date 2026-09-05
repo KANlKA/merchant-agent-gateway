@@ -1,16 +1,4 @@
-"""
-Live end-to-end check against an ACTUAL RUNNING SERVER over real HTTP
-(urllib, stdlib only — no in-process TestClient shortcuts). This is
-the check that proves the FastAPI app, not just the underlying
-gateway module, actually works.
 
-Usage:
-    # terminal 1
-    uvicorn app.main:app --port 8000
-
-    # terminal 2
-    python scripts/e2e_http_check.py --base-url http://localhost:8000
-"""
 from __future__ import annotations
 
 import argparse
